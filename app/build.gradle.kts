@@ -4,14 +4,12 @@ plugins {
 
 android {
     namespace = "vn.edu.vhu.ltdd.doanandroi"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "vn.edu.vhu.ltdd.doanandroi"
         minSdk = 26
-        targetSdk = 36
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -33,6 +31,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
+    // Bật ViewBinding cho module app theo yêu cầu
     buildFeatures {
         viewBinding = true
     }
@@ -43,7 +42,6 @@ dependencies {
     implementation(libs.material)
     implementation(libs.constraintlayout)
     implementation("com.github.bumptech.glide:glide:4.16.0")
-    // Retrofit 2 + Gson cho App Admin gọi Backend REST API (theo chuẩn đề cương INT4211)
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation("com.google.code.gson:gson:2.11.0")
