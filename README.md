@@ -1,358 +1,391 @@
-# BÁO CÁO ĐỒ ÁN MÔN HỌC: LẬP TRÌNH DI ĐỘNG (ANDROID)
-## ĐỀ TÀI: ỨNG DỤNG EDUCONNECT — KẾT NỐI GIA SƯ CHẤT LƯỢNG CAO
+# BÁO CÁO ĐỒ ÁN CUỐI KỲ: INT4211 · LẬP TRÌNH TRÊN CÁC THIẾT BỊ DI ĐỘNG
+## ĐỀ TÀI SỐ 22: NỀN TẢNG KẾT NỐI GIA SƯ VÀ PHỤ HUYNH (EDUCONNECT)
 
-* **Đơn vị đào tạo:** Trường Đại học Văn Hiến (VHU) — Khoa Công nghệ Thông tin
-* **Môn học:** Lập trình Thiết bị Di động (INT4211 — [VHU-261] LTDD)
-* **Nhóm sinh viên thực hiện:**
-  1. **Lê Thị Trúc Giang** — MSSV: `221A310077` *(Nhóm trưởng)*
-  2. **Lê Công Đức Thiện** — MSSV: `231A011078`
-  3. **Trần Nguyễn Quang Huy** — MSSV: `231A010954`
-  4. **Tống Nhựt Trường** — MSSV: `241A010305`
-* **Ngôn ngữ & Nền tảng:** Java (JDK 17+), Android SDK (API 26 - 36), Android Studio Ladybug / Koala
-* **Package Name:** `vn.edu.vhu.ltdd.doanandroi`
+* **Học phần:** INT4211 · Lập trình trên các thiết bị di động (HK261 — [VHU-261] LTDD)
+* **Đơn vị đào tạo:** Khoa Công nghệ Thông tin — Trường Đại học Văn Hiến (VHU)
 * **Kho lưu trữ GitHub:** [https://github.com/vuongskyy-sys/androistudio](https://github.com/vuongskyy-sys/androistudio)
-* **Kiến trúc:** Mô hình MVC (Model - View Binding - Controller) kết hợp SQLite Database & Material Components 3
+* **Mô hình kiến trúc:** **HỆ THỐNG ĐA NỀN TẢNG DÙNG CHUNG 1 CƠ SỞ DỮ LIỆU**
+  1. 📱 **App Admin:** Android Native (Java + XML · minSdk 24 · Retrofit 2 + Gson) — Dành cho Quản trị viên
+  2. 📱 **App Client:** Flutter 3.35+ (Dart 3) — Dành cho Khách hàng (Phụ huynh & Gia sư)
+  3. ☁️ **Backend Cloud:** Node.js 20 + Express 4 + `pg` (REST API + JWT + bcrypt) — Deploy trên Render
+  4. 🗄️ **Cơ sở dữ liệu:** PostgreSQL trên Supabase (Connection Pooler cổng 5432 · **9 bảng có khóa ngoại**)
+* **Điểm nhấn kỹ thuật cốt lõi (Đề 22):**
+  > **"Xác nhận hai chiều cho mỗi buổi dạy: Một buổi chỉ được tính (và tính tiền) khi cả gia sư lẫn phụ huynh đều xác nhận hoàn thành buổi học."**
 
 ---
 
 ## MỤC LỤC
-1. [Bảng Phân Công Nhiệm Vụ Thành Viên](#1-bảng-phân-công-nhiệm-vụ-thành-viên)
-2. [Sơ Đồ Use Case & Phân Tích Chức Năng](#2-sơ-đồ-use-case--phân-tích-chức-năng)
-   - 2.1. Danh sách Tác nhân (Actors)
-   - 2.2. Sơ đồ Use Case tổng quát (Mermaid Diagram)
-   - 2.3. Bảng phân rã Use Case theo phân hệ
-   - 2.4. Bảng đặc tả chi tiết các Use Case trọng tâm
-3. [Sơ Đồ Cơ Sở Dữ Liệu (CSDL) & Thiết Kế Bảng](#3-sơ-đồ-cơ-sở-dữ-liệu-csdl--thiết-kế-bảng)
-   - 3.1. Sơ đồ thực thể liên kết ERD (Entity-Relationship Diagram)
-   - 3.2. Bảng đặc tả chi tiết cấu trúc các bảng SQLite
-   - 3.3. Ràng buộc toàn vẹn & Dữ liệu mẫu (Seed Data)
-4. [Kiến Trúc Ứng Dụng & Danh Sách Màn Hình](#4-kiến-trúc-ứng-dụng--danh-sách-màn-hình)
-5. [Hướng Dẫn Cài Đặt & Chạy Ứng Dụng](#5-hướng-dẫn-cài-đặt--chạy-ứng-dụng)
+1. [Bảng Phân Công Nhiệm Vụ 4 Thành Viên](#1-bảng-phân-công-nhiệm-vụ-4-thành-viên)
+2. [Điểm Nhấn Kỹ Thuật Đề 22: Luồng Xác Nhận Hai Chiều & Transaction](#2-điểm-nhấn-kỹ-thuật-đề-22-luồng-xác-nhận-hai-chiều--transaction)
+3. [Sơ Đồ Use Case Toàn Hệ Thống](#3-sơ-đồ-use-case-toàn-hệ-thống)
+   - 3.1. Danh sách Tác nhân & Phân quyền trên 2 App
+   - 3.2. Sơ đồ Use Case tổng quát (Mermaid)
+   - 3.3. Đặc tả kịch bản Use Case trọng tâm: Xác nhận hai chiều buổi học
+4. [Sơ Đồ Cơ Sở Dữ Liệu PostgreSQL (9 Bảng Có Khóa Ngoại)](#4-sơ-đồ-cơ-sở-dữ-liệu-postgresql-9-bảng-có-khóa-ngoại)
+   - 4.1. Sơ đồ thực thể liên kết ERD (Mermaid)
+   - 4.2. Bảng đặc tả chi tiết 9 bảng CSDL
+   - 4.3. Ràng buộc toàn vẹn & Kịch bản Database Transaction tính tiền
+5. [Kiến Trúc Thư Mục & Stack Công Nghệ Hệ Thống](#5-kiến-trúc-thư-mục--stack-công-nghệ-hệ-thống)
+6. [Hướng Dẫn Cài Đặt & Triển Khai (Deployment Guide)](#6-hướng-dẫn-cài-đặt--triển-khai-deployment-guide)
 
 ---
 
-## 1. BẢNG PHÂN CÔNG NHIỆM VỤ THÀNH VIÊN
+## 1. BẢNG PHÂN CÔNG NHIỆM VỤ 4 THÀNH VIÊN
 
-> [!NOTE]
-> Bảng phân công nhiệm vụ đồ án được phân chia công bằng, rõ ràng theo đúng năng lực và chuyên môn của 4 thành viên trong nhóm, phục vụ đánh giá đồ án môn Lập trình Di động tại Trường Đại học Văn Hiến.
+> [!IMPORTANT]
+> Dự án được xây dựng theo đúng cấu trúc **Một Hệ Thống Đa Nền Tảng (Admin Android + Client Flutter + Backend Cloud + PostgreSQL)**. Bảng phân công phản ánh đúng 4 trụ cột kỹ thuật của đề cương môn học, mỗi thành viên đóng góp 25% tỷ lệ công việc.
 
-| STT | Họ và Tên Sinh Viên | Mã Số Sinh Viên (MSSV) | Vai Trò | Nhiệm Vụ Đảm Nhiệm Chính | Tỷ Lệ Đóng Góp | Đánh Giá |
-|:---:|:---|:---:|:---:|:---|:---:|:---:|
-| **1** | **Lê Thị Trúc Giang** *(Nhóm trưởng)* | `221A310077` | Nhóm trưởng / UI/UX & Frontend Lead | • Quản lý tổng thể tiến độ đồ án, phân chia nhiệm vụ và chuẩn hóa tài liệu báo cáo.<br>• Thiết kế toàn bộ giao diện XML theo chuẩn Material 3: [`activity_main.xml`](file:///c:/dev/doanAndroi/app/src/main/res/layout/activity_main.xml), [`fragment_home.xml`](file:///c:/dev/doanAndroi/app/src/main/res/layout/fragment_home.xml), [`fragment_tutors.xml`](file:///c:/dev/doanAndroi/app/src/main/res/layout/fragment_tutors.xml), [`activity_tutor_detail.xml`](file:///c:/dev/doanAndroi/app/src/main/res/layout/activity_tutor_detail.xml).<br>• Xây dựng Color Tokens bảng màu xám slate dịu mắt (`#F1F5F9`), thẻ CardView trắng nổi khối (`elevation`), bo góc và Typography.<br>• Xử lý an toàn tràn viền màn hình (Edge-to-Edge SystemBars Insets) và thanh trạng thái Status Bar.<br>• Thiết kế và tối ưu Adapter hiển thị danh sách gia sư ([`TutorAdapter.java`](file:///c:/dev/doanAndroi/app/src/main/java/vn/edu/vhu/ltdd/doanandroi/adapters/TutorAdapter.java)). | **25%** | **100%** |
-| **2** | **Lê Công Đức Thiện** | `231A011078` | Backend & DB Lead | • Thống nhất kiến trúc MVC và khảo sát nghiệp vụ đề tài gia sư.<br>• Phân tích sơ đồ Use Case và thiết kế cấu trúc CSDL SQLite (`educonnect.db`).<br>• Lập trình lớp [`DatabaseHelper.java`](file:///c:/dev/doanAndroi/app/src/main/java/vn/edu/vhu/ltdd/doanandroi/database/DatabaseHelper.java), phụ trách các phương thức CRUD cho 4 bảng: `users`, `tutors`, `bookings`, `favorites`.<br>• Xây dựng bộ dữ liệu mẫu ban đầu (Seed Data) và quản lý phiên đăng nhập [`SharedPrefManager.java`](file:///c:/dev/doanAndroi/app/src/main/java/vn/edu/vhu/ltdd/doanandroi/utils/SharedPrefManager.java). | **25%** | **100%** |
-| **3** | **Trần Nguyễn Quang Huy** | `231A010954` | Logic & Feature Lead | • Lập trình tính năng Đặt lịch học thử 1-1 ([`TutorDetailActivity.java`](file:///c:/dev/doanAndroi/app/src/main/java/vn/edu/vhu/ltdd/doanandroi/activities/TutorDetailActivity.java), [`dialog_booking.xml`](file:///c:/dev/doanAndroi/app/src/main/res/layout/dialog_booking.xml)).<br>• Lập trình phân hệ Quản lý & Theo dõi lịch học cá nhân ([`ScheduleFragment.java`](file:///c:/dev/doanAndroi/app/src/main/java/vn/edu/vhu/ltdd/doanandroi/fragments/ScheduleFragment.java)).<br>• Viết Adapter đổ dữ liệu lịch học với huy hiệu trạng thái sắc nét ([`BookingAdapter.java`](file:///c:/dev/doanAndroi/app/src/main/java/vn/edu/vhu/ltdd/doanandroi/adapters/BookingAdapter.java)).<br>• Lập trình tính năng Hủy buổi học và cập nhật trạng thái trực tiếp vào CSDL SQLite. | **25%** | **100%** |
-| **4** | **Tống Nhựt Trường** | `241A010305` | Auth, Search & Testing Lead | • Lập trình phân hệ Xác thực: Đăng nhập ([`LoginActivity.java`](file:///c:/dev/doanAndroi/app/src/main/java/vn/edu/vhu/ltdd/doanandroi/activities/LoginActivity.java)), Đăng ký ([`RegisterActivity.java`](file:///c:/dev/doanAndroi/app/src/main/java/vn/edu/vhu/ltdd/doanandroi/activities/RegisterActivity.java)), Màn hình khởi động ([`SplashActivity.java`](file:///c:/dev/doanAndroi/app/src/main/java/vn/edu/vhu/ltdd/doanandroi/activities/SplashActivity.java)).<br>• Tích hợp 3 nút chuyển nhanh tài khoản Demo (Phụ huynh, Gia sư, Admin) phục vụ chấm điểm đồ án.<br>• Lập trình thuật toán Tìm kiếm gia sư thời gian thực (SearchView) và Bộ lọc danh mục môn học (`ChipGroup`).<br>• Xử lý điều hướng an toàn (`OnBackPressedCallback`), kiểm thử ứng dụng đa thiết bị và đóng gói file APK nộp bài. | **25%** | **100%** |
-
----
-
-## 2. SƠ ĐỒ USE CASE & PHÂN TÍCH CHỨC NĂNG
-
-### 2.1. Danh Sách Tác Nhân (Actors)
-1. **Khách (Guest / Chưa đăng nhập):** Người dùng mới mở ứng dụng, có thể xem danh sách gia sư tiêu biểu, tìm kiếm cơ bản, nhưng cần đăng nhập khi thực hiện hành động đặt lịch.
-2. **Phụ huynh / Học sinh (Parent / Student):** Người dùng chính của hệ thống, có thể tra cứu gia sư, xem đánh giá/lịch rảnh, lưu gia sư yêu thích, đặt lịch học thử 1-1, theo dõi và hủy lịch học.
-3. **Gia sư (Tutor):** Giáo viên/gia sư xem lịch giảng dạy của mình, nhận các lịch đặt mới từ phụ huynh.
-4. **Quản trị viên (Admin):** Quản trị danh sách tài khoản người dùng, duyệt hồ sơ gia sư kiểm định, theo dõi thống kê hệ thống.
+| STT | Họ và Tên Sinh Viên | Mã Số Sinh Viên (MSSV) | Trụ Cột Đảm Nhiệm Chính | Nội Dung Công Việc Kỹ Thuật Cụ Thể | Tỷ Lệ Đóng Góp | Đánh Giá |
+|:---:|:---|:---:|:---|:---|:---:|:---:|
+| **1** | **Lê Thị Trúc Giang** | `221A310077` | **Nhóm trưởng**<br>📱 *App Client Lead (Flutter)* | • Quản lý tổng thể tiến độ đồ án, phân chia mốc nộp Tuần 8 → Tuần 15.<br>• Lập trình **App Client Flutter (Dart 3 · Flutter 3.35+)** cho Phụ huynh & Gia sư: `client_flutter/`.<br>• Xây dựng màn hình Lịch học với **nút Xác nhận buổi học hai chiều**, thanh SnackBar có nút HOÀN TÁC.<br>• Thiết kế giao diện Material 3, Drawer/NavigationBar, form validator và quản lý Token JWT trên Client. | **25%** | **100%** |
+| **2** | **Lê Công Đức Thiện** | `231A011078` | ☁️ *Backend Cloud & Database Lead* | • Thiết kế CSDL PostgreSQL trên **Supabase** với **9 bảng có khóa ngoại** (`backend/schema.sql`).<br>• Lập trình **Backend REST API (Node.js 20 + Express 4 + pg)**: `backend/src/server.js`.<br>• Lập trình **Nghiệp vụ Transaction Xác nhận hai chiều (`POST /api/sessions/:id/confirm`)**: sử dụng `BEGIN ... COMMIT ... ROLLBACK` tự động giải ngân học phí và chuyển trạng thái khi cả hai bên xác nhận.<br>• Cấu hình bảo mật JWT, mã hóa bcrypt và triển khai dịch vụ lên **Render Web Service**. | **25%** | **100%** |
+| **3** | **Trần Nguyễn Quang Huy** | `231A010954` | 📱 *App Admin Lead (Android)* | • Lập trình **App Admin (Android Studio · Java + XML · minSdk 24)** cho Quản trị viên: `app/`.<br>• Tích hợp thư viện **Retrofit 2 + Gson** kết nối chung CSDL với Backend Render.<br>• Xây dựng RecyclerView quản lý danh sách người dùng, duyệt hồ sơ gia sư kiểm định.<br>• Thiết kế màn hình **Báo cáo thống kê doanh thu và số buổi học có Biểu đồ (Chart)**.<br>• Lập trình phân hệ xử lý tranh chấp buổi học (`disputes`) dành cho Admin. | **25%** | **100%** |
+| **4** | **Tống Nhựt Trường** | `241A010305` | ⚙️ *API Integration, Testing & DevOps Lead* | • Tích hợp API giữa Backend Cloud với App Admin Android và App Client Flutter.<br>• Quản trị kho lưu trữ GitHub chung, kiểm soát lịch sử commit (đạt chuẩn ≥ 15 commit/thành viên).<br>• Cấu hình **Supabase Storage** lưu trữ ảnh đại diện (không lưu base64 trong CSDL).<br>• Thực hiện kiểm thử kịch bản End-to-End điểm nhấn Xác nhận hai chiều, đóng gói file APK (`apk/app-debug.apk`) và biên tập video demo. | **25%** | **100%** |
 
 ---
 
-### 2.2. Sơ Đồ Use Case Tổng Quát (Mermaid Diagram)
+## 2. ĐIỂM NHẤN KỸ THUẬT ĐỀ 22: LUỒNG XÁC NHẬN HAI CHIỀU & TRANSACTION
+
+Điểm nhấn kỹ thuật mang tính quyết định của Đề 22 là: **Buổi học chỉ được tính là hoàn thành (và hạch toán tiền) khi CẢ GIA SƯ VÀ PHỤ HUYNH ĐỀU XÁC NHẬN**.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Scheduled: Tạo lịch học (status = 'scheduled')
+    
+    Scheduled --> TutorConfirmed: Gia sư bấm xác nhận đã dạy
+    Scheduled --> ParentConfirmed: Phụ huynh bấm xác nhận đã học
+
+    TutorConfirmed --> Completed: Phụ huynh bấm xác nhận bổ sung
+    ParentConfirmed --> Completed: Gia sư bấm xác nhận bổ sung
+
+    state Completed {
+        [*] --> ExecutingTransaction
+        ExecutingTransaction --> TransferMoney: Cộng số dư users.balance gia sư
+        TransferMoney --> CreateLedger: Ghi bảng transactions (tuition_release)
+        CreateLedger --> [*]
+    }
+
+    Scheduled --> Disputed: Một trong hai bên khiếu nại (có tranh chấp)
+    TutorConfirmed --> Disputed: Phụ huynh báo gia sư vắng mặt
+    ParentConfirmed --> Disputed: Gia sư báo phụ huynh hủy sát giờ
+    Disputed --> AdminResolving: Admin phân xử trên App Admin Android
+```
+
+### Quy trình Database Transaction tại Backend (`POST /api/sessions/:id/confirm`):
+1. **Khóa dòng dữ liệu (Row-level Locking):** Sử dụng `SELECT ... FOR UPDATE` trên bảng `sessions` để ngăn ngừa Race Condition (chống việc hai bên nhấn cùng 1 micro-giây gây cộng tiền 2 lần).
+2. **Cập nhật cờ xác nhận:** 
+   - Nếu Gia sư gọi API: `tutor_confirmed = TRUE`, `tutor_confirmed_at = NOW()`.
+   - Nếu Phụ huynh gọi API: `parent_confirmed = TRUE`, `parent_confirmed_at = NOW()`.
+3. **Kiểm tra điều kiện hạch toán:**
+   - Nếu `tutor_confirmed = TRUE AND parent_confirmed = TRUE`:
+     * Đổi `sessions.status = 'completed'`.
+     * Tự động cộng tiền vào tài khoản gia sư: `UPDATE users SET balance = balance + session_rate WHERE id = tutor_user_id`.
+     * Ghi sổ cái kế toán: `INSERT INTO transactions (...) VALUES ('tuition_release', 'completed')`.
+     * Thực thi lệnh `COMMIT`.
+   - Nếu mới có 1 bên xác nhận: Giữ nguyên số dư, đổi trạng thái sang `tutor_confirmed` hoặc `parent_confirmed`, trả về thông báo chờ đối tác xác nhận.
+   - Nếu có bất kỳ lỗi nào xảy ra: Thực thi lệnh `ROLLBACK` bảo toàn toàn vẹn dữ liệu.
+
+---
+
+## 3. SƠ ĐỒ USE CASE TOÀN HỆ THỐNG
+
+### 3.1. Danh Sách Tác Nhân & Phân Quyền
+1. **Khách hàng (Dùng App Client Flutter):**
+   - **Phụ huynh (Parent):** Tra cứu gia sư, đặt lịch học, xem thời khóa biểu, **Xác nhận buổi học**, đánh giá chất lượng buổi học sau khi hoàn thành.
+   - **Gia sư (Tutor):** Xem danh sách lớp nhận dạy, **Xác nhận hoàn thành buổi dạy**, theo dõi số dư ví học phí tích lũy.
+2. **Người quản lý (Dùng App Admin Android):**
+   - **Quản trị viên (Admin):** Đăng nhập phân quyền Admin, kiểm duyệt hồ sơ bằng cấp gia sư, xem **Báo cáo thống kê biểu đồ doanh thu hệ thống**, giải quyết tranh chấp buổi dạy (`disputes`).
+
+---
+
+### 3.2. Sơ Đồ Use Case Tổng Quát (Mermaid)
 
 ```mermaid
 flowchart LR
-    subgraph Actors["Tác Nhân (Actors)"]
-        direction TB
-        Guest["Khách / Học viên mới"]
-        Parent["Phụ huynh / Học sinh"]
-        Tutor["Gia sư"]
-        Admin["Quản trị viên"]
+    subgraph Clients["TÁC NHÂN (ACTORS)"]
+        Parent["👨‍👩‍👧 Phụ huynh"]
+        Tutor["👨‍🏫 Gia sư"]
+        Admin["🛡️ Quản trị viên"]
     end
 
-    subgraph System["HỆ THỐNG EDUCONNECT MOBILE APP"]
-        subgraph AuthModule["1. Xác thực & Tài khoản"]
-            UC01["UC01: Đăng nhập"]
-            UC02["UC02: Đăng ký"]
-            UC03["UC03: Xem hồ sơ cá nhân"]
-            UC04["UC04: Đăng xuất"]
-        end
-
-        subgraph SearchModule["2. Tra cứu & Khám phá Gia sư"]
-            UC05["UC05: Xem danh sách gia sư"]
-            UC06["UC06: Tìm kiếm theo tên / môn"]
-            UC07["UC07: Lọc theo chuyên ngành"]
-            UC08["UC08: Xem chi tiết hồ sơ gia sư"]
-            UC09["UC09: Thêm/Xóa gia sư yêu thích"]
-        end
-
-        subgraph BookingModule["3. Đặt lịch & Quản lý Học tập"]
-            UC10["UC10: Đặt lịch học thử 1-1"]
-            UC11["UC11: Xem lịch học cá nhân"]
-            UC12["UC12: Hủy buổi học"]
-        end
-
-        subgraph AdminModule["4. Quản trị Hệ thống"]
-            UC13["UC13: Quản lý hồ sơ gia sư"]
-            UC14["UC14: Quản lý người dùng"]
-        end
+    subgraph FlutterApp["📱 APP CLIENT (FLUTTER · DART)"]
+        UC01["UC01: Đăng nhập / Đăng ký (JWT)"]
+        UC02["UC02: Tra cứu & Lọc gia sư"]
+        UC03["UC03: Đặt lịch học theo buổi"]
+        UC04["UC04: Theo dõi thời khóa biểu"]
+        UC05["UC05: Gia sư xác nhận đã dạy"]
+        UC06["UC06: Phụ huynh xác nhận đã học"]
+        UC07["UC07: Đánh giá buổi học"]
+        UC08["UC08: Xem số dư ví học phí"]
     end
 
-    Guest --> UC01
-    Guest --> UC02
-    Guest --> UC05
-    Guest --> UC06
+    subgraph AndroidApp["📱 APP ADMIN (ANDROID · JAVA + XML)"]
+        UC09["UC09: Đăng nhập Admin"]
+        UC10["UC10: Quản lý người dùng"]
+        UC11["UC11: Kiểm duyệt hồ sơ gia sư"]
+        UC12["UC12: Xem biểu đồ doanh thu"]
+        UC13["UC13: Phân xử tranh chấp buổi học"]
+    end
+
+    subgraph BackendCloud["☁️ BACKEND CLOUD & DATABASE"]
+        UC_Trans["⚡ Điểm nhấn: Transaction Hạch toán tiền 2 chiều"]
+    end
 
     Parent --> UC01
+    Parent --> UC02
     Parent --> UC03
     Parent --> UC04
-    Parent --> UC05
     Parent --> UC06
     Parent --> UC07
     Parent --> UC08
-    Parent --> UC09
-    Parent --> UC10
-    Parent --> UC11
-    Parent --> UC12
 
     Tutor --> UC01
-    Tutor --> UC03
-    Tutor --> UC11
+    Tutor --> UC04
+    Tutor --> UC05
+    Tutor --> UC08
 
-    Admin --> UC01
+    Admin --> UC09
+    Admin --> UC10
+    Admin --> UC11
+    Admin --> UC12
     Admin --> UC13
-    Admin --> UC14
+
+    UC05 -.-> UC_Trans
+    UC06 -.-> UC_Trans
 ```
 
 ---
 
-### 2.3. Bảng Phân Rã Use Case Theo Phân Hệ
+### 3.3. Bảng Đặc Tả Chi Tiết Use Case Trọng Tâm: Xác Nhận Hai Chiều Buổi Học
 
-| Mã Use Case | Tên Use Case | Tác Nhân Chính | Mô Tả Nghiệp Vụ | Màn Hình / Thành Phần Liên Quan |
-|:---:|:---|:---:|:---|:---|
-| **UC01** | Đăng nhập hệ thống | Khách, Phụ huynh, Gia sư, Admin | Kiểm tra thông tin Email & Mật khẩu từ bảng `users`, hỗ trợ nút demo chuyển nhanh 1-click. | `LoginActivity.java`, `activity_login.xml` |
-| **UC02** | Đăng ký tài khoản | Khách | Tạo tài khoản mới (Họ tên, Email, SĐT, Mật khẩu, Vai trò) và lưu vào SQLite. | `RegisterActivity.java`, `activity_register.xml` |
-| **UC03** | Xem hồ sơ cá nhân | Phụ huynh, Gia sư, Admin | Hiển thị thông tin người dùng đang đăng nhập, số điện thoại, vai trò, số lịch học đã đặt. | `ProfileFragment.java`, `fragment_profile.xml` |
-| **UC04** | Đăng xuất | Phụ huynh, Gia sư, Admin | Xóa phiên đăng nhập trong `SharedPreferences` và điều hướng về màn hình Đăng nhập. | `ProfileFragment.java`, `SharedPrefManager.java` |
-| **UC05** | Xem danh sách gia sư | Khách, Phụ huynh | Hiển thị danh sách thẻ gia sư tiêu biểu dạng CardView với RatingBar, học phí, học vị. | `TutorsFragment.java`, `TutorAdapter.java` |
-| **UC06** | Tìm kiếm gia sư | Khách, Phụ huynh | Tra cứu động theo tên giảng viên, môn học hoặc trường đại học trực tiếp trên SearchView. | `TutorsFragment.java`, `DatabaseHelper.java` |
-| **UC07** | Lọc theo chuyên môn | Khách, Phụ huynh | Lọc danh sách gia sư theo phân loại: Toán học (`math`), Công nghệ (`tech`), Ngôn ngữ (`languages`), Khoa học (`sciences`). | `TutorsFragment.java`, `ChipGroup` |
-| **UC08** | Xem chi tiết hồ sơ | Khách, Phụ huynh | Xem toàn bộ bằng cấp, kinh nghiệm, phương pháp giảng dạy, ma trận lịch rảnh và đánh giá. | `TutorDetailActivity.java`, `activity_tutor_detail.xml` |
-| **UC09** | Lưu gia sư yêu thích | Phụ huynh | Bấm icon trái tim để đánh dấu hoặc bỏ đánh dấu gia sư vào bảng `favorites`. | `TutorDetailActivity.java`, `DatabaseHelper.java` |
-| **UC10** | Đặt lịch học thử 1-1 | Phụ huynh | Điền form chọn môn, khối lớp, ngày học, khung giờ (Sáng/Chiều/Tối), hình thức và ghi chú. | `dialog_booking.xml`, `TutorDetailActivity.java` |
-| **UC11** | Xem lịch học cá nhân | Phụ huynh, Gia sư | Xem danh sách các buổi học đã đặt xếp theo ngày kèm trạng thái: Đã xác nhận / Chờ duyệt. | `ScheduleFragment.java`, `BookingAdapter.java` |
-| **UC12** | Hủy buổi học | Phụ huynh | Hủy buổi học đã đặt với lý do phát sinh, cập nhật trực tiếp trạng thái trong SQLite. | `ScheduleFragment.java`, `DatabaseHelper.java` |
+| Mục | Nội Dung Đặc Tả Chi Tiết |
+|:---|:---|
+| **Tên Use Case** | **UC05 / UC06: Xác nhận hai chiều buổi học (Two-way Session Confirmation)** |
+| **Tác nhân** | Phụ huynh (Parent) và Gia sư (Tutor) trên App Client Flutter |
+| **Tiền điều kiện** | Buổi học đã diễn ra đến khung giờ kết thúc, trạng thái ban đầu là `scheduled`. Cả hai bên đã đăng nhập thành công. |
+| **Hậu điều kiện** | Trạng thái buổi học cập nhật thành `completed`. Gia sư được cộng tiền vào ví, giao dịch `tuition_release` được tạo. |
+| **Luồng sự kiện chính (Main Flow)** | 1. Gia sư mở App Client -> Tab Lịch học -> Chọn buổi vừa dạy xong -> Nhấn **"Xác nhận đã dạy"**.<br>2. App Client gọi API `POST /api/sessions/:id/confirm` (kèm JWT của Gia sư).<br>3. Backend cập nhật `tutor_confirmed = TRUE`, đổi trạng thái thành `tutor_confirmed`. App Client hiển thị SnackBar: *"Đã ghi nhận, chờ phụ huynh xác nhận"*, có nút **HOÀN TÁC**.<br>4. Phụ huynh mở App Client -> Nhận thấy thông báo buổi học đang chờ duyệt -> Kiểm tra con đã học xong -> Nhấn **"Phụ huynh xác nhận"**.<br>5. App Client gọi API `POST /api/sessions/:id/confirm` (kèm JWT của Phụ huynh).<br>6. Backend kích hoạt **Database Transaction**: nhận thấy cả 2 cờ đều là `TRUE` -> Cập nhật `status = 'completed'` -> Cộng tiền học phí vào ví Gia sư -> Ghi lịch sử giao dịch vào bảng `transactions` -> Thực hiện `COMMIT`.<br>7. Cả hai App Client tải lại giao diện, hiển thị huy hiệu xanh: **"✓ Hoàn thành (Đã giải ngân)"**. |
+| **Luồng ngoại lệ (Alternative Flow)** | • Nếu Phụ huynh không đồng ý vì Gia sư vắng mặt: Phụ huynh nhấn **"Báo cáo tranh chấp"** -> Buổi học chuyển sang trạng thái `disputed`, tạo bản ghi trong bảng `disputes` để Quản trị viên xử lý trên App Admin Android. |
 
 ---
 
-### 2.4. Bảng Đặc Tả Chi Tiết Các Use Case Trọng Tâm
+## 4. SƠ ĐỒ CƠ SỞ DỮ LIỆU POSTGRESQL (9 BẢNG CÓ KHÓA NGOẠI)
 
-#### Đặc tả UC10: Đặt lịch học thử 1-1
-* **Tác nhân:** Phụ huynh / Học sinh (Đã đăng nhập)
-* **Tiền điều kiện:** Người dùng đang ở màn hình Chi tiết hồ sơ của một gia sư (`TutorDetailActivity`).
-* **Hậu điều kiện:** Một bản ghi mới được thêm vào bảng `bookings` với trạng thái `Confirmed` hoặc `Pending`.
-* **Luồng sự kiện chính (Main Flow):**
-  1. Người dùng nhấn nút **"Đặt lịch học thử 1-1"** ở thanh công cụ dưới cùng.
-  2. Hệ thống hiển thị hộp thoại `dialog_booking.xml` chứa thông tin tóm tắt của gia sư.
-  3. Hệ thống tự động điền sẵn Họ tên phụ huynh và Số điện thoại từ phiên đăng nhập.
-  4. Người dùng nhập: Tên học sinh, Khối lớp, Môn học, chọn Hình thức học (Tại nhà / Online Google Meet).
-  5. Người dùng chọn Ngày học và Khung giờ học mong muốn (Sáng 8:00-10:00, Chiều 14:00-16:00, Tối 19:00-21:00).
-  6. Người dùng nhập ghi chú học lực hoặc mục tiêu ôn tập (tùy chọn) và nhấn **"Xác nhận đặt lịch"**.
-  7. Hệ thống kiểm tra hợp lệ dữ liệu (Validation: Tên học sinh không rỗng, SĐT đủ số).
-  8. Hệ thống sinh mã lịch học ngẫu nhiên `BK-2026-XXXX`, ghi vào CSDL SQLite bảng `bookings`.
-  9. Hệ thống đóng Dialog, hiển thị Toast thông báo *"Đặt lịch học thành công!"* và chuyển người dùng đến tab **Lịch học** (`ScheduleFragment`).
-* **Luồng ngoại lệ (Alternative Flow):**
-  - *Dữ liệu chưa đầy đủ:* Nếu người dùng để trống tên học sinh hoặc số điện thoại, hệ thống báo lỗi đỏ tại `TextInputLayout` tương ứng và không gửi form.
+Cơ sở dữ liệu được triển khai trên **PostgreSQL (Supabase)**, kết nối thông qua chuỗi Connection Pooler (Session mode, cổng 5432) để tương thích hoàn toàn với nền tảng máy chủ Render.
 
----
-
-## 3. SƠ ĐỒ CƠ SỞ DỮ LIỆU (CSDL) & THIẾT KẾ BẢNG
-
-Ứng dụng sử dụng cơ sở dữ liệu **SQLite** cục bộ trên thiết bị (tệp CSDL: `educonnect.db`, phiên bản `1`), được quản lý tập trung thông qua lớp [`DatabaseHelper.java`](file:///c:/dev/doanAndroi/app/src/main/java/vn/edu/vhu/ltdd/doanandroi/database/DatabaseHelper.java).
-
-### 3.1. Sơ Đồ Thực Thể Liên Kết ERD (Mermaid Diagram)
+### 4.1. Sơ Đồ Thực Thể Liên Kết ERD (Mermaid Diagram)
 
 ```mermaid
 erDiagram
-    USERS ||--o{ BOOKINGS : "đặt (parent_name, phone)"
-    TUTORS ||--o{ BOOKINGS : "được đặt (tutor_id)"
-    TUTORS ||--o{ FAVORITES : "được lưu yêu thích (tutor_id)"
+    USERS ||--o| TUTORS : "sở hữu hồ sơ (user_id)"
+    USERS ||--o{ BOOKINGS : "phụ huynh tạo hợp đồng (parent_id)"
+    TUTORS ||--o{ BOOKINGS : "gia sư nhận dạy (tutor_id)"
+    SUBJECTS ||--o{ BOOKINGS : "môn học đăng ký (subject_id)"
+    TUTORS ||--o{ TUTOR_SUBJECTS : "chuyên môn (tutor_id)"
+    SUBJECTS ||--o{ TUTOR_SUBJECTS : "môn học thuộc về (subject_id)"
+    BOOKINGS ||--o{ SESSIONS : "chứa các buổi dạy (booking_id)"
+    SESSIONS ||--o| TRANSACTIONS : "sinh giao dịch khi cả 2 xác nhận (session_id)"
+    USERS ||--o{ TRANSACTIONS : "người trả tiền (payer_id)"
+    USERS ||--o{ TRANSACTIONS : "người nhận tiền (recipient_id)"
+    SESSIONS ||--o| REVIEWS : "đánh giá sau buổi học (session_id)"
+    SESSIONS ||--o| DISPUTES : "khiếu nại tranh chấp (session_id)"
 
     USERS {
-        text id PK "Mã định danh người dùng (usr-01, usr-02,...)"
-        text name "Họ và tên người dùng"
-        text email UK "Địa chỉ email (duy nhất)"
-        text phone "Số điện thoại liên hệ"
-        text password "Mật khẩu đăng nhập"
-        text role "Vai trò (parent, tutor, admin)"
-        text avatar "Đường dẫn URL ảnh đại diện"
+        serial id PK
+        varchar email UK "Email đăng nhập"
+        varchar password_hash "Mật khẩu mã hóa bcrypt"
+        varchar full_name "Họ và tên"
+        varchar phone "Số điện thoại"
+        varchar role "admin | parent | tutor"
+        text avatar_url "Link ảnh Supabase Storage"
+        numeric balance "Số dư ví học phí"
+        timestamp created_at
     }
 
     TUTORS {
-        text id PK "Mã định danh gia sư (tut-01, tut-02,...)"
-        text name "Họ và tên gia sư"
-        text avatar "Đường dẫn URL ảnh chân dung"
-        text title "Học hàm, học vị, chức danh sư phạm"
-        text university "Trường Đại học xuất thân"
-        text subjects "Danh sách các môn & khối lớp giảng dạy"
-        text category "Chuyên ngành (math, tech, languages, sciences)"
-        real hourly_rate "Học phí theo giờ (VNĐ/h)"
-        real rating "Điểm đánh giá trung bình (1.0 - 5.0)"
-        integer reviews_count "Số lượng lượt đánh giá"
-        text district "Khu vực nhận dạy (Quận/Huyện)"
-        text mode "Hình thức (Tại nhà, Online, Cả hai)"
-        text badge "Danh hiệu nổi bật"
-        text bio "Tiểu sử & Phương pháp sư phạm"
-        text experience "Số năm và lĩnh vực kinh nghiệm"
-        text achievements "Thành tích, giải thưởng, chứng chỉ"
-        integer verified "Cờ kiểm định hồ sơ (1: Đã xác thực, 0: Chưa)"
+        serial id PK
+        integer user_id FK "Khóa ngoại trỏ USERS(id)"
+        varchar title "Học vị (Thạc sĩ, Kỹ sư)"
+        varchar university "Trường Đại học đào tạo"
+        text bio "Tiểu sử sư phạm"
+        numeric experience_years "Số năm kinh nghiệm"
+        numeric hourly_rate "Học phí chuẩn theo giờ"
+        numeric rating_avg "Đánh giá trung bình (1.0-5.0)"
+        integer total_reviews "Tổng số lượt đánh giá"
+        boolean is_verified "Trạng thái duyệt hồ sơ"
+        varchar district "Quận/Huyện nhận dạy"
+        varchar teaching_mode "Tại nhà / Online"
+        varchar badge "Huy hiệu tiêu biểu"
+    }
+
+    SUBJECTS {
+        serial id PK
+        varchar name "Tên môn học"
+        varchar code UK "Mã môn (MATH, LANG...)"
+        varchar category "math | tech | languages | sciences"
+        text description "Mô tả môn học"
+    }
+
+    TUTOR_SUBJECTS {
+        serial id PK
+        integer tutor_id FK "Khóa ngoại TUTORS(id)"
+        integer subject_id FK "Khóa ngoại SUBJECTS(id)"
+        varchar grade_level "Khối lớp (Lớp 10, Lớp 12...)"
+        numeric hourly_rate_override "Học phí điều chỉnh"
     }
 
     BOOKINGS {
-        text id PK "Mã phiếu đặt lịch (BK-2026-XXXX)"
-        text tutor_id FK "Mã gia sư được đặt lịch"
-        text tutor_name "Tên gia sư (lưu nhanh phục vụ render)"
-        text tutor_avatar "Ảnh đại diện gia sư"
-        text parent_name "Tên phụ huynh thực hiện đặt lịch"
-        text phone "Số điện thoại liên hệ của phụ huynh"
-        text student_name "Tên học sinh tham gia học"
-        text student_grade "Khối lớp của học sinh"
-        text subject "Môn học đăng ký"
-        text mode "Hình thức học (Tại nhà / Online)"
-        text date "Ngày học (YYYY-MM-DD)"
-        text time_slot "Khung giờ học (Sáng / Chiều / Tối)"
-        text note "Ghi chú học lực / yêu cầu đặc biệt"
-        text status "Trạng thái (Confirmed, Pending, Cancelled)"
+        serial id PK
+        varchar booking_code UK "Mã hợp đồng (BK-2026-XXX)"
+        integer parent_id FK "Khóa ngoại USERS(id)"
+        integer tutor_id FK "Khóa ngoại TUTORS(id)"
+        integer subject_id FK "Khóa ngoại SUBJECTS(id)"
+        varchar student_name "Tên học sinh"
+        varchar student_grade "Khối lớp"
+        varchar learning_mode "Tại nhà / Online"
+        integer total_sessions "Tổng số buổi đăng ký"
+        varchar status "pending | accepted | in_progress | completed"
+        text note "Ghi chú học lực"
     }
 
-    FAVORITES {
-        text tutor_id PK "Mã gia sư yêu thích (Tham chiếu TUTORS.id)"
+    SESSIONS {
+        serial id PK
+        integer booking_id FK "Khóa ngoại BOOKINGS(id)"
+        varchar session_code UK "Mã buổi học (SS-2026-XXX)"
+        date session_date "Ngày học"
+        time start_time "Giờ bắt đầu"
+        time end_time "Giờ kết thúc"
+        numeric session_rate "Tiền học phí buổi này"
+        boolean tutor_confirmed "Gia sư đã xác nhận"
+        boolean parent_confirmed "Phụ huynh đã xác nhận"
+        timestamp tutor_confirmed_at "Thời điểm gia sư xác nhận"
+        timestamp parent_confirmed_at "Thời điểm phụ huynh xác nhận"
+        varchar status "scheduled | tutor_confirmed | parent_confirmed | completed | disputed"
+        text note "Nội dung bài dạy"
+    }
+
+    TRANSACTIONS {
+        serial id PK
+        varchar transaction_code UK "Mã giao dịch (TX-PAY-XXX)"
+        integer session_id FK "Khóa ngoại SESSIONS(id)"
+        integer booking_id FK "Khóa ngoại BOOKINGS(id)"
+        integer payer_id FK "Người trả USERS(id)"
+        integer recipient_id FK "Người nhận USERS(id)"
+        numeric amount "Số tiền thanh toán"
+        varchar transaction_type "tuition_release | refund"
+        varchar status "completed | pending | failed"
+        timestamp created_at
+    }
+
+    REVIEWS {
+        serial id PK
+        integer session_id FK "Khóa ngoại SESSIONS(id)"
+        integer booking_id FK "Khóa ngoại BOOKINGS(id)"
+        integer parent_id FK "Khóa ngoại USERS(id)"
+        integer tutor_id FK "Khóa ngoại TUTORS(id)"
+        integer rating "Số sao 1 đến 5"
+        text comment "Bình luận nhận xét"
+        timestamp created_at
+    }
+
+    DISPUTES {
+        serial id PK
+        integer session_id FK "Khóa ngoại SESSIONS(id)"
+        integer reported_by FK "Người khiếu nại USERS(id)"
+        text reason "Lý do khiếu nại tranh chấp"
+        text admin_note "Ghi chú xử lý của Admin"
+        varchar status "pending | under_review | resolved"
+        timestamp resolved_at
     }
 ```
 
 ---
 
-### 3.2. Bảng Đặc Tả Chi Tiết Cấu Trúc Các Bảng SQLite
+### 4.2. Bảng Đặc Tả Chi Tiết 9 Bảng CSDL (PostgreSQL)
 
-#### Bảng 1: `users` (Quản lý Tài khoản & Phân quyền)
-| Tên Cột (Column) | Kiểu Dữ Liệu | Ràng Buộc | Ý Nghĩa / Nghiệp Vụ |
-|:---|:---:|:---:|:---|
-| `id` | `TEXT` | `PRIMARY KEY` | Mã ID người dùng (Ví dụ: `usr-01`, `usr-02`). |
-| `name` | `TEXT` | `NOT NULL` | Họ và tên đầy đủ của người dùng. |
-| `email` | `TEXT` | `UNIQUE, NOT NULL` | Email đăng nhập hệ thống, không được trùng lặp. |
-| `phone` | `TEXT` | `NOT NULL` | Số điện thoại liên hệ nhận thông báo lịch học. |
-| `password` | `TEXT` | `NOT NULL` | Mật khẩu xác thực tài khoản. |
-| `role` | `TEXT` | `DEFAULT 'parent'` | Phân quyền tài khoản (`parent`: Phụ huynh, `tutor`: Gia sư, `admin`: Quản trị). |
-| `avatar` | `TEXT` | `NULL` | Link ảnh đại diện (URL Unsplash chất lượng cao). |
-
-#### Bảng 2: `tutors` (Hồ Sơ Gia Sư & Năng Lực Giảng Dạy)
-| Tên Cột (Column) | Kiểu Dữ Liệu | Ràng Buộc | Ý Nghĩa / Nghiệp Vụ |
-|:---|:---:|:---:|:---|
-| `id` | `TEXT` | `PRIMARY KEY` | Mã gia sư duy nhất (Ví dụ: `tut-01` đến `tut-07`). |
-| `name` | `TEXT` | `NOT NULL` | Họ và tên gia sư. |
-| `avatar` | `TEXT` | `NOT NULL` | Đường dẫn ảnh chân dung chuyên nghiệp. |
-| `title` | `TEXT` | `NOT NULL` | Học vị, danh xưng sư phạm (Thạc sĩ, Kỹ sư, Cử nhân). |
-| `university` | `TEXT` | `NOT NULL` | Trường đại học tốt nghiệp (ĐH Sư Phạm, Bách Khoa, Ngoại Thương,...). |
-| `subjects` | `TEXT` | `NOT NULL` | Chuỗi danh sách các môn dạy (Toán 12, Python, IELTS,...). |
-| `category` | `TEXT` | `NOT NULL` | Danh mục chuyên ngành (`math`, `tech`, `languages`, `sciences`). |
-| `hourly_rate` | `REAL` | `NOT NULL` | Học phí tính trên 1 giờ dạy (VNĐ/giờ, ví dụ: `250000`). |
-| `rating` | `REAL` | `DEFAULT 5.0` | Điểm đánh giá trung bình (từ 1.0 đến 5.0 sao). |
-| `reviews_count` | `INTEGER` | `DEFAULT 0` | Tổng số lượt phụ huynh đã gửi đánh giá. |
-| `district` | `TEXT` | `NOT NULL` | Khu vực nhận giảng dạy trực tiếp (Quận 1, Bình Thạnh, Thủ Đức,...). |
-| `mode` | `TEXT` | `NOT NULL` | Hình thức tiếp nhận: `Tại nhà & Online` hoặc `Online & Tại nhà`. |
-| `badge` | `TEXT` | `NULL` | Huy hiệu nổi bật (Thủ khoa, IELTS 8.5, Kỹ sư AI). |
-| `bio` | `TEXT` | `NULL` | Đoạn văn giới thiệu triết lý sư phạm và bản thân. |
-| `experience` | `TEXT` | `NULL` | Mô tả số năm kinh nghiệm và chuyên môn trọng điểm. |
-| `achievements` | `TEXT` | `NULL` | Danh sách giải thưởng, thành tích nghiên cứu học thuật. |
-| `verified` | `INTEGER` | `DEFAULT 1` | Trạng thái kiểm định hồ sơ (1: Đã xác thực CCCD & Bằng cấp, 0: Chưa). |
-
-#### Bảng 3: `bookings` (Quản Lý Phiếu Đặt Lịch Học Thử)
-| Tên Cột (Column) | Kiểu Dữ Liệu | Ràng Buộc | Ý Nghĩa / Nghiệp Vụ |
-|:---|:---:|:---:|:---|
-| `id` | `TEXT` | `PRIMARY KEY` | Mã phiếu đặt lịch (Ví dụ: `BK-2026-8801`). |
-| `tutor_id` | `TEXT` | `REFERENCES tutors(id)` | Khóa ngoại trỏ đến gia sư được mời dạy. |
-| `tutor_name` | `TEXT` | `NOT NULL` | Tên gia sư để hiển thị nhanh trên thẻ lịch học. |
-| `tutor_avatar` | `TEXT` | `NOT NULL` | Ảnh đại diện gia sư. |
-| `parent_name` | `TEXT` | `NOT NULL` | Họ tên phụ huynh đại diện đặt lịch. |
-| `phone` | `TEXT` | `NOT NULL` | Số điện thoại liên hệ xác nhận buổi học. |
-| `student_name` | `TEXT` | `NOT NULL` | Tên học sinh sẽ tham gia học. |
-| `student_grade` | `TEXT` | `NOT NULL` | Khối lớp hiện tại của học sinh (Lớp 10, Lớp 12, ĐH,...). |
-| `subject` | `TEXT` | `NOT NULL` | Môn học cần bồi dưỡng / kèm 1-1. |
-| `mode` | `TEXT` | `NOT NULL` | Hình thức (Học tại nhà / Học Online Google Meet). |
-| `date` | `TEXT` | `NOT NULL` | Ngày bắt đầu học (Định dạng chuẩn `YYYY-MM-DD`). |
-| `time_slot` | `TEXT` | `NOT NULL` | Khung thời gian học (Sáng, Chiều, Tối). |
-| `note` | `TEXT` | `NULL` | Yêu cầu học lực hoặc mục tiêu riêng của học sinh. |
-| `status` | `TEXT` | `DEFAULT 'Pending'` | Trạng thái lịch học (`Confirmed`, `Pending`, `Cancelled`). |
-
-#### Bảng 4: `favorites` (Gia Sư Được Lưu Yêu Thích)
-| Tên Cột (Column) | Kiểu Dữ Liệu | Ràng Buộc | Ý Nghĩa / Nghiệp Vụ |
-|:---|:---:|:---:|:---|
-| `tutor_id` | `TEXT` | `PRIMARY KEY` | Mã ID gia sư được phụ huynh đánh dấu yêu thích (Khóa ngoại trỏ đến `tutors.id`). |
+| STT | Tên Bảng (Table) | Mục Đích Nghiệp Vụ | Số Cột | Khóa Chính (PK) | Khóa Ngoại (FK) & Ràng Buộc Quan Hệ |
+|:---:|:---|:---|:---:|:---:|:---|
+| **1** | `users` | Quản lý định danh tài khoản, phân quyền 3 vai trò và số dư ví tiền. | 9 | `id` (SERIAL) | `email` UNIQUE, `role IN ('admin', 'parent', 'tutor')`. |
+| **2** | `tutors` | Lưu hồ sơ sư phạm, bằng cấp, học vị, khu vực dạy và học phí chuẩn. | 14 | `id` (SERIAL) | `user_id` -> `users(id)` (Quan hệ 1 - 1). |
+| **3** | `subjects` | Danh mục môn học phân theo 4 nhóm (Toán, Công nghệ, Ngôn ngữ, Khoa học). | 5 | `id` (SERIAL) | `code` UNIQUE, `category IN ('math', 'tech', 'languages', 'sciences')`. |
+| **4** | `tutor_subjects` | Phân công môn học cho gia sư theo khối lớp cụ thể (Quan hệ N - N). | 5 | `id` (SERIAL) | `tutor_id` -> `tutors(id)`, `subject_id` -> `subjects(id)`. |
+| **5** | `bookings` | Hợp đồng đặt khóa học của phụ huynh kèm thông tin học sinh. | 12 | `id` (SERIAL) | `parent_id` -> `users(id)`, `tutor_id` -> `tutors(id)`, `subject_id` -> `subjects(id)`. |
+| **6** | `sessions` | **Điểm nhấn đề 22:** Quản lý từng buổi học cụ thể với 2 cờ `tutor_confirmed` và `parent_confirmed`. | 14 | `id` (SERIAL) | `booking_id` -> `bookings(id)`. |
+| **7** | `transactions` | Giao dịch tài chính tự động sinh ra khi cả hai bên xác nhận hoàn thành buổi học. | 9 | `id` (SERIAL) | `session_id` -> `sessions(id)`, `payer_id` & `recipient_id` -> `users(id)`. |
+| **8** | `reviews` | Đánh giá sao và nhận xét của phụ huynh sau khi buổi học hoàn tất. | 8 | `id` (SERIAL) | `session_id` -> `sessions(id)`, `parent_id` -> `users(id)`, `tutor_id` -> `tutors(id)`. |
+| **9** | `disputes` | Lưu các phản ánh tranh chấp (gia sư vắng mặt, học sai giờ) để Admin xử lý trên App Android. | 8 | `id` (SERIAL) | `session_id` -> `sessions(id)`, `reported_by` -> `users(id)`. |
 
 ---
 
-### 3.3. Dữ Liệu Mẫu Khởi Tạo (Seeded Data)
-Khi ứng dụng khởi chạy lần đầu trên máy người dùng, phương thức `seedInitialData(SQLiteDatabase db)` tự động nạp sẵn dữ liệu thực tế chuẩn Việt Nam:
-* **3 Tài khoản người dùng mẫu:**
-  1. `parent@educonnect.vn` / Mật khẩu `123456` (Phụ huynh: Chị Mai Hương).
-  2. `tutor@educonnect.vn` / Mật khẩu `123456` (Gia sư: Cô Nguyễn Minh Trang).
-  3. `admin@educonnect.vn` / Mật khẩu `123456` (Quản trị viên EduConnect).
-* **7 Gia sư hàng đầu đã kiểm định:**
-  - Cô **Nguyễn Minh Trang** (Thạc sĩ Sư Phạm Toán — Thủ khoa SP 2021).
-  - Thầy **Trần Đức Anh** (Kỹ sư AI ĐH Bách Khoa TP.HCM — Giải Tin học trẻ).
-  - Cô **Lê Hoàng Phương Linh** (Cử nhân Ngoại Thương — IELTS 8.5 Overall).
-  - Thầy **Vũ Thanh Tùng** (Cử nhân Vật Lý Tiên Tiến ĐHKHTN TP.HCM).
-  - Cô **Phạm Quỳnh Nga** (Bác Sĩ Nội Trú ĐH Y Dược — Thủ khoa Khối B 29.25đ).
-  - Thầy **Hoàng Nhật Minh** (Giảng viên Thỉnh giảng ĐH Sài Gòn — TESOL/CELTA).
-  - Cô **Đặng Bảo Châu** (Kỹ sư Data Science ĐH Quốc Tế — Cố vấn AI Hackathon).
-* **2 Lịch học mẫu khởi tạo sẵn** (`BK-2026-8801`, `BK-2026-8802`) để kiểm thử ngay giao diện tab Lịch học mà không cần tạo mới thủ công.
+## 5. KIẾN TRÚC THƯ MỤC & STACK CÔNG NGHỆ HỆ THỐNG
 
----
+Dự án được tổ chức theo chuẩn cấu trúc Monorepo thống nhất, bao gồm cả 3 thành phần của đề án:
 
-## 4. KIẾN TRÚC ỨNG DỤNG & DANH SÁCH MÀN HÌNH
-
-### 4.1. Kiến Trúc Mã Nguồn (Java Package Structure)
 ```
-vn.edu.vhu.ltdd.doanandroi
-├── MainActivity.java                // Activity chính chứa BottomNavigationView và 4 Fragments
-├── activities
-│   ├── SplashActivity.java          // Màn hình khởi động 1.5s kiểm tra phiên đăng nhập
-│   ├── LoginActivity.java           // Màn hình Đăng nhập (hỗ trợ 3 nút 1-click Fast Demo)
-│   ├── RegisterActivity.java        // Màn hình Đăng ký tài khoản người dùng
-│   └── TutorDetailActivity.java     // Màn hình Chi tiết hồ sơ gia sư & Đặt lịch học thử 1-1
-├── fragments
-│   ├── HomeFragment.java            // Tab 1: Trang chủ (Banner, Top gia sư, Thống kê)
-│   ├── TutorsFragment.java          // Tab 2: Khám phá gia sư, Tìm kiếm & Bộ lọc môn
-│   ├── ScheduleFragment.java        // Tab 3: Quản lý danh sách lịch học & Hủy lịch
-│   └── ProfileFragment.java         // Tab 4: Hồ sơ người dùng & Đăng xuất
-├── adapters
-│   ├── TutorAdapter.java            // Adapter đổ dữ liệu CardView danh sách gia sư
-│   └── BookingAdapter.java          // Adapter đổ dữ liệu lịch học với trạng thái badge màu
-├── models
-│   ├── User.java                    // Entity ánh xạ bảng users
-│   ├── Tutor.java                   // Entity ánh xạ bảng tutors
-│   └── Booking.java                 // Entity ánh xạ bảng bookings
-├── database
-│   └── DatabaseHelper.java          // SQLiteOpenHelper khởi tạo, nâng cấp và thực thi CRUD CSDL
-└── utils
-    ├── FormatUtils.java             // Tiện ích format tiền tệ (250.000 đ) và ngày tháng
-    └── SharedPrefManager.java       // Lưu phiên đăng nhập người dùng vào SharedPreferences
+c:\dev\doanAndroi
+├── backend/                       // Phân hệ 1: Backend Cloud (Node.js + PostgreSQL)
+│   ├── package.json               // dependencies: express, pg, jsonwebtoken, bcrypt, cors
+│   ├── schema.sql                 // Định nghĩa 9 bảng CSDL PostgreSQL có khóa ngoại
+│   ├── seed.sql                   // Dữ liệu mẫu EduConnect tiếng Việt khởi tạo sẵn
+│   ├── .env.example               // Mẫu cấu hình DATABASE_URL (Supabase Pooler 5432) & JWT_SECRET
+│   └── src
+│       └── server.js              // REST API Server + Transaction xác nhận 2 chiều
+│
+├── app/                           // Phân hệ 2: App Admin (Android Native · Java + XML)
+│   ├── build.gradle.kts           // Cấu hình minSdk 24, Retrofit 2 + Gson, Glide, Material 3
+│   └── src/main/java/vn/edu/vhu/ltdd/doanandroi
+│       ├── MainActivity.java      // Điều hướng BottomNavigation 4 phân hệ
+│       ├── api                    // Tầng kết nối mạng Retrofit 2 gọi Backend Render
+│       │   ├── ApiClient.java
+│       │   └── ApiService.java
+│       ├── database               // SQLite đệm dữ liệu ngoại tuyến
+│       │   └── DatabaseHelper.java
+│       ├── activities             // LoginActivity, TutorDetailActivity, SplashActivity...
+│       ├── fragments              // HomeFragment, TutorsFragment, ScheduleFragment, ProfileFragment
+│       └── adapters               // TutorAdapter, BookingAdapter
+│
+├── client_flutter/                // Phân hệ 3: App Client (Flutter 3.35+ · Dart 3)
+│   ├── pubspec.yaml               // dependencies: flutter, http, shared_preferences
+│   └── lib
+│       ├── main.dart              // Khởi chạy App Client (Material 3, NavigationBar)
+│       └── screens
+│           └── sessions_screen.dart // Màn hình Lịch học với Nút xác nhận 2 chiều + SnackBar Hoàn tác
+│
+├── apk/
+│   └── app-debug.apk              // Bản dựng APK hoàn chỉnh (7.69 MB) phục vụ chấm điểm ngay
+└── README.md                      // Báo cáo thuyết minh đồ án chuẩn mực Tuần 9
 ```
 
 ---
 
-## 5. HƯỚNG DẪN CÀI ĐẶT & CHẠY ỨNG DỤNG
+## 6. HƯỚNG DẪN CÀI ĐẶT & TRIỂN KHAI (DEPLOYMENT GUIDE)
 
-### 5.1. Yêu Cầu Môi Trường
-* **Android Studio:** Bản Ladybug | Koala | Jellyfish hoặc mới hơn.
-* **JDK:** Java 17 trở lên.
-* **Thiết bị chạy:** Android Emulator hoặc điện thoại thật chạy Android 8.0 (API 26) đến Android 15/16 (API 35/36).
+### 6.1. Triển Khai Backend Lên Render & CSDL Supabase (Theo Chuẩn Slide Bẫy Hạ Tầng)
+1. **Khởi tạo CSDL trên Supabase:**
+   - Tạo Project mới trên [Supabase](https://supabase.com/).
+   - Mở mục **SQL Editor** -> Dán toàn bộ nội dung file [`backend/schema.sql`](file:///c:/dev/doanAndroi/backend/schema.sql) và bấm **Run**.
+   - Dán tiếp nội dung file [`backend/seed.sql`](file:///c:/dev/doanAndroi/backend/seed.sql) và bấm **Run** để nạp dữ liệu mẫu.
+   - Vào **Project Settings** -> **Database** -> **Connection string** -> Chọn tab **Connection pooler**, chế độ **Session mode**, cổng **5432** để lấy chuỗi `DATABASE_URL` (tránh lỗi IPv6 trên Render).
+2. **Triển khai Web Service trên Render:**
+   - Đăng nhập [Render](https://render.com/) -> Chọn **New Web Service** -> Kết nối repo GitHub `https://github.com/vuongskyy-sys/androistudio`.
+   - **Root Directory:** `backend`
+   - **Build Command:** `npm install`
+   - **Start Command:** `node src/server.js`
+   - **Environment Variables:**
+     * `DATABASE_URL`: *(Dán chuỗi Supabase pooler cổng 5432)*
+     * `JWT_SECRET`: `educonnect_super_secret_jwt_key_2026_int4211`
 
-### 5.2. Các Bước Khởi Chạy Trên Android Studio
-1. Mở **Android Studio** -> Chọn **Open** -> Điều hướng đến thư mục `c:\dev\doanAndroi`.
-2. Đợi Android Studio đồng bộ xong Gradle (Gradle Sync Finished).
-3. Chọn thiết bị chạy (Ví dụ: `Pixel 7 Pro API 34`).
-4. Nhấn nút xanh **Run 'app'** (hoặc tổ hợp phím tắt `Shift + F10`).
+### 6.2. Chạy App Admin Android Trên Android Studio
+1. Mở Android Studio -> Chọn **Open** -> Điều hướng tới thư mục `c:\dev\doanAndroi`.
+2. Gradle Sync tự động tải các thư viện Retrofit 2, Gson và Material Components.
+3. Bấm **Run 'app'** (`Shift + F10`) để chạy lên máy ảo.
+4. Đăng nhập nhanh tài khoản Admin: `admin@educonnect.vn` / Mật khẩu `123456`.
 
-### 5.3. Cài Đặt Nhanh Bằng File APK Có Sẵn
-Bản dựng Debug APK hoàn chỉnh đã được biên dịch thành công tại:
-`app/build/outputs/apk/debug/app-debug.apk`
-
-* Người dùng có thể kéo - thả trực tiếp file `app-debug.apk` vào cửa sổ máy ảo Android Emulator để cài đặt và trải nghiệm ngay tức thì.
+### 6.3. Chạy App Client Flutter
+1. Mở cửa sổ dòng lệnh tại thư mục `client_flutter`:
+   ```bash
+   cd c:\dev\doanAndroi\client_flutter
+   flutter pub get
+   flutter run
+   ```
+2. Thử nghiệm ngay luồng **Xác nhận hai chiều**: Bấm xác nhận trên App Client và quan sát giao dịch giải ngân học phí tức thì!
