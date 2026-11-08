@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand Midnight Navy Palette -->
+    <color name="midnight_950">#060A14</color>
+    <color name="midnight_900">#0B132B</color>
+    <color name="midnight_850">#0F1A3A</color>
+    <color name="midnight_800">#152248</color>
+    <color name="midnight_700">#1C2E5E</color>
+
+    <!-- Soothing, High-Contrast Backgrounds (Soft Slate-Grey — Dịu mắt, không lóa) -->
+    <color name="ivory_50">#F1F5F9</color> <!-- Nền chính dịu mắt -->
+    <color name="ivory_100">#E2E8F0</color> <!-- Nền phụ / Sub-surface -->
+    <color name="ivory_200">#CBD5E1</color> <!-- Viền thẻ sắc nét -->
+    <color name="ivory_300">#94A3B8</color>
+    <color name="white">#FFFFFFFF</color>   <!-- Thẻ nổi bật màu trắng tinh khiết -->
+
+    <!-- Restrained Mint & Lime Accents -->
+    <color name="mint_600">#059669</color>
+    <color name="mint_500">#10B981</color>
+    <color name="mint_400">#34D399</color>
+    <color name="mint_50">#ECFDF5</color>
+    <color name="mint_100">#D1FAE5</color>
+    <color name="lime_accent">#D4E956</color>
+
+    <!-- Academic Category Accents -->
+    <color name="academic_math">#2563EB</color>
+    <color name="academic_math_light">#EFF6FF</color>
+    <color name="academic_lang">#D97706</color>
+    <color name="academic_lang_light">#FFFBEB</color>
+    <color name="academic_science">#059669</color>
+    <color name="academic_science_light">#ECFDF5</color>
+    <color name="academic_tech">#0D9488</color>
+    <color name="academic_tech_light">#F0FDFA</color>
+
+    <!-- Text & Ink Greys -->
+    <color name="ink_950">#0F172A</color>
+    <color name="ink_900">#1E293B</color>
+    <color name="ink_800">#334155</color>
+    <color name="ink_700">#475569</color>
+    <color name="ink_600">#64748B</color>
+    <color name="ink_500">#94A3B8</color>
+    <color name="ink_400">#CBD5E1</color>
+    <color name="ink_300">#E2E8F0</color>
+    <color name="ink_200">#F1F5F9</color>
+    <color name="ink_100">#F8FAFC</color>
+
+    <!-- Status Colors -->
+    <color name="star_gold">#F59E0B</color>
+    <color name="error_red">#EF4444</color>
+    <color name="error_red_light">#FEF2F2</color>
+    <color name="success_green">#10B981</color>
+    <color name="success_green_light">#ECFDF5</color>
+    <color name="black">#FF000000</color>
+</resources>

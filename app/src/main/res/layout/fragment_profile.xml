@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ivory_50">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_profile"
+            android:textColor="@color/ink_950"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <!-- User Information Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp"
+            app:strokeColor="@color/ivory_200"
+            app:strokeWidth="1dp"
+            app:cardBackgroundColor="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/imgProfileAvatar"
+                        android:layout_width="68dp"
+                        android:layout_height="68dp"
+                        android:scaleType="centerCrop"
+                        android:background="@drawable/bg_avatar_placeholder"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+                        tools:srcCompat="@tools:sample/avatars" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="14dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvProfileName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/ink_950"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            tools:text="Chị Mai Hương" />
+
+                        <TextView
+                            android:id="@+id/tvProfileRole"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:background="@drawable/bg_badge_mint"
+                            android:textColor="@color/mint_600"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            tools:text="Phụ huynh học viên" />
+
+                        <TextView
+                            android:id="@+id/tvProfileEmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textColor="@color/ink_600"
+                            android:textSize="12sp"
+                            tools:text="parent@educonnect.vn" />
+
+                        <TextView
+                            android:id="@+id/tvProfilePhone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/ink_500"
+                            android:textSize="12sp"
+                            tools:text="0908 123 456" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/ivory_100" />
+
+                <!-- Statistics Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvStatFavoritesCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/midnight_900"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            tools:text="1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/stat_saved_tutors"
+                            android:textColor="@color/ink_500"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/ivory_200" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvStatTotalBookingsCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/mint_600"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            tools:text="2" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/stat_total_bookings"
+                            android:textColor="@color/ink_500"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Profile Action Buttons -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnEditProfile"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/btn_edit_profile"
+            android:textColor="@color/midnight_900"
+            android:textSize="13sp"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/ic_edit"
+            app:iconGravity="textStart"
+            app:strokeColor="@color/midnight_900" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogout"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="24dp"
+            android:text="@string/btn_logout"
+            android:textColor="@color/error_red"
+            android:textSize="13sp"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/ic_logout"
+            app:iconGravity="textStart"
+            app:iconTint="@color/error_red"
+            app:strokeColor="@color/error_red" />
+
+    </LinearLayout>
+</ScrollView>

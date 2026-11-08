@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginVertical="6dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    app:strokeColor="@color/ivory_200"
+    app:strokeWidth="1dp"
+    app:cardBackgroundColor="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="14dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgBookingAvatar"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/bg_avatar_placeholder"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tvBookingSubject"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:textColor="@color/academic_math"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/imgBookingAvatar"
+            app:layout_constraintEnd_toStartOf="@id/tvBookingStatus"
+            app:layout_constraintTop_toTopOf="@id/imgBookingAvatar"
+            tools:text="Toán 12" />
+
+        <TextView
+            android:id="@+id/tvBookingTutorName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:textColor="@color/ink_950"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/imgBookingAvatar"
+            app:layout_constraintEnd_toStartOf="@id/tvBookingStatus"
+            app:layout_constraintTop_toBottomOf="@id/tvBookingSubject"
+            tools:text="Gia sư: Nguyễn Minh Trang" />
+
+        <TextView
+            android:id="@+id/tvBookingStudent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:textColor="@color/ink_600"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@id/imgBookingAvatar"
+            app:layout_constraintEnd_toStartOf="@id/tvBookingStatus"
+            app:layout_constraintTop_toBottomOf="@id/tvBookingTutorName"
+            tools:text="Học sinh: Bé Đức Trí (Lớp 12)" />
+
+        <TextView
+            android:id="@+id/tvBookingStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_badge_mint"
+            android:textColor="@color/mint_600"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/imgBookingAvatar"
+            tools:text="Đã xác nhận" />
+
+        <LinearLayout
+            android:id="@+id/layoutBookingDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/ivory_100"
+            android:orientation="vertical"
+            android:padding="10dp"
+            app:layout_constraintTop_toBottomOf="@id/imgBookingAvatar">
+
+            <TextView
+                android:id="@+id/tvBookingDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/ink_800"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:text="📅 2026-10-30 • ⏰ Tối (19:00 - 21:00)" />
+
+            <TextView
+                android:id="@+id/tvBookingMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/ink_600"
+                android:textSize="11sp"
+                tools:text="📍 Hình thức: Học Trực tiếp tại nhà" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCancelBooking"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginTop="6dp"
+            android:text="Hủy lịch hẹn"
+            android:textColor="@color/error_red"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutBookingDetails" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

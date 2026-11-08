@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ivory_50">
+
+    <!-- Top Action Bar -->
+    <LinearLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/white"
+        android:elevation="2dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back"
+            android:contentDescription="Quay lại" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:text="@string/title_tutor_detail"
+            android:textColor="@color/ink_950"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/btnDetailFavorite"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_heart"
+            android:contentDescription="Lưu yêu thích" />
+    </LinearLayout>
+
+    <!-- Scrollable Profile Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomBookingBar"
+        app:layout_constraintTop_toBottomOf="@id/topBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Profile Summary Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/ivory_200"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/imgDetailAvatar"
+                            android:layout_width="72dp"
+                            android:layout_height="72dp"
+                            android:scaleType="centerCrop"
+                            android:background="@drawable/bg_avatar_placeholder"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+                            tools:srcCompat="@tools:sample/avatars" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvDetailName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/ink_950"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                tools:text="Nguyễn Minh Trang" />
+
+                            <TextView
+                                android:id="@+id/tvDetailBadge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:background="@drawable/bg_badge_mint"
+                                android:text="Thủ khoa Sư Phạm 2021"
+                                android:textColor="@color/mint_600"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvDetailTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:textColor="@color/ink_700"
+                                android:textSize="12sp"
+                                tools:text="Thạc sĩ Sư Phạm Toán — ĐH Sư Phạm TP.HCM" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Rating, Location, Mode row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:background="@color/ivory_100"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/tvDetailRating"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="⭐ 4.9 (38)"
+                            android:textColor="@color/star_gold"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvDetailDistrict"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="📍 Quận 1"
+                            android:textColor="@color/ink_700"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tvDetailMode"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="💻 Tại nhà &amp; Online"
+                            android:textColor="@color/mint_600"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Subjects Chips -->
+                    <TextView
+                        android:id="@+id/tvDetailSubjects"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/bg_badge_academic"
+                        android:padding="8dp"
+                        android:textColor="@color/academic_math"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        tools:text="Toán 12 • Luyện thi ĐH • Toán Olympic • Toán 10-11" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Bio Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/section_bio"
+                android:textColor="@color/ink_950"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDetailBio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_badge_mint"
+                android:backgroundTint="@color/white"
+                android:lineSpacingExtra="3dp"
+                android:padding="14dp"
+                android:textColor="@color/ink_700"
+                android:textSize="13sp"
+                tools:text="Thủ khoa đầu ra Sư phạm Toán 2021 với hơn 5 năm kinh nghiệm giảng dạy chuyên sâu khối 10-12. Phương pháp truyền đạt logic, kiên nhẫn và luôn cá nhân hóa lộ trình học." />
+
+            <!-- Achievements Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/section_achievements"
+                android:textColor="@color/ink_950"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDetailAchievements"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_badge_mint"
+                android:backgroundTint="@color/white"
+                android:lineSpacingExtra="4dp"
+                android:padding="14dp"
+                android:textColor="@color/ink_800"
+                android:textSize="13sp"
+                tools:text="• Giải Nhì Olympic Toán sinh viên toàn quốc\n• Chứng chỉ Sư phạm loại Xuất sắc\n• Tác giả chuỗi video Chinh phục Hàm số 12" />
+
+            <!-- Weekly Schedule Table -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/section_schedule"
+                android:textColor="@color/ink_950"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/ivory_200"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Thứ 2, 4, 6: Tối (19h - 21h)"
+                        android:textColor="@color/ink_800"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Thứ 7 &amp; Chủ Nhật: Sáng (8h - 11h), Chiều (14h - 17h)"
+                        android:textColor="@color/ink_700"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="* Lịch học thực tế sẽ được sắp xếp linh hoạt theo thời gian biểu của học sinh."
+                        android:textColor="@color/mint_600"
+                        android:textSize="11sp"
+                        android:textStyle="italic" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Parent Reviews Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/section_reviews"
+                android:textColor="@color/ink_950"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/bg_badge_mint"
+                android:backgroundTint="@color/white"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="&quot;Cô Trang dạy cực kỳ có tâm! Con tôi trước đây rất sợ môn Hình học không gian, nhưng chỉ sau 1 tháng được cô kèm đã tự tin làm được bài kiểm tra đạt 9.0 điểm.&quot;"
+                    android:textColor="@color/ink_700"
+                    android:textSize="12sp"
+                    android:textStyle="italic" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="— Phụ huynh em Gia Huy (Lớp 12) • ⭐⭐⭐⭐⭐"
+                    android:textColor="@color/ink_950"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Sticky Booking Bar -->
+    <LinearLayout
+        android:id="@+id/bottomBookingBar"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:background="@color/white"
+        android:elevation="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HỌC PHÍ THEO GIỜ"
+                android:textColor="@color/ink_400"
+                android:textSize="9sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDetailHourlyRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/midnight_900"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="250.000₫/h" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBookTrialNow"
+            style="@style/Widget.EduConnect.Button.Primary"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="@string/btn_book_now"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:cornerRadius="12dp" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

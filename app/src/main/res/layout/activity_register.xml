@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/ivory_50">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp">
+
+        <ImageButton
+            android:id="@+id/btnBackToLogin"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvRegisterTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Tạo tài khoản EduConnect"
+            android:textColor="@color/ink_950"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnBackToLogin" />
+
+        <TextView
+            android:id="@+id/tvRegisterSubtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Tham gia cộng đồng giáo dục kết nối gia sư và phụ huynh thông minh"
+            android:textColor="@color/ink_600"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvRegisterTitle" />
+
+        <!-- Name Input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilRegName"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/hint_fullname"
+            app:layout_constraintTop_toBottomOf="@id/tvRegisterSubtitle">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etRegName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Email Input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilRegEmail"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="@string/hint_email"
+            app:startIconDrawable="@drawable/ic_mail"
+            app:layout_constraintTop_toBottomOf="@id/tilRegName">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etRegEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Phone Input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilRegPhone"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="@string/hint_phone"
+            app:startIconDrawable="@drawable/ic_phone"
+            app:layout_constraintTop_toBottomOf="@id/tilRegEmail">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etRegPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Role Selector -->
+        <TextView
+            android:id="@+id/tvRoleLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Vai trò của bạn trên nền tảng"
+            android:textColor="@color/ink_700"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tilRegPhone" />
+
+        <RadioGroup
+            android:id="@+id/rgRole"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/tvRoleLabel">
+
+            <RadioButton
+                android:id="@+id/rbParent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/role_parent"
+                android:textSize="12sp" />
+
+            <RadioButton
+                android:id="@+id/rbTutor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/role_tutor"
+                android:textSize="12sp" />
+        </RadioGroup>
+
+        <!-- Password Input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilRegPassword"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="@string/hint_password"
+            app:passwordToggleEnabled="true"
+            app:startIconDrawable="@drawable/ic_lock"
+            app:layout_constraintTop_toBottomOf="@id/rgRole">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etRegPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Confirm Password Input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilRegConfirmPassword"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="@string/hint_confirm_password"
+            app:passwordToggleEnabled="true"
+            app:startIconDrawable="@drawable/ic_lock"
+            app:layout_constraintTop_toBottomOf="@id/tilRegPassword">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etRegConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Register Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRegisterSubmit"
+            style="@style/Widget.EduConnect.Button.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/btn_register"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/tilRegConfirmPassword" />
+
+        <!-- Login Link Prompt -->
+        <TextView
+            android:id="@+id/tvBackToLoginLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp"
+            android:text="@string/prompt_have_account"
+            android:textColor="@color/mint_600"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnRegisterSubmit" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

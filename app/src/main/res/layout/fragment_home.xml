@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ivory_50">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="24dp">
+
+        <!-- Top Header: Greeting & Role -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvGreeting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/greeting_default"
+                    android:textColor="@color/ink_950"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvUserRoleBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="TÀI KHOẢN PHỤ HUYNH"
+                    android:textColor="@color/mint_600"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/bg_badge_mint"
+                android:backgroundTint="@color/midnight_900"
+                android:gravity="center"
+                android:text="EC"
+                android:textColor="@color/lime_accent"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Hero Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/midnight_950">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_badge_mint"
+                    android:backgroundTint="@color/midnight_800"
+                    android:text="KIỂM ĐỊNH 4 LỚP • TOP 5% GIA SƯ"
+                    android:textColor="@color/lime_accent"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/hero_title"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/hero_subtitle"
+                    android:textColor="@color/ink_300"
+                    android:textSize="12sp"
+                    android:lineSpacingExtra="2dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnHeroExplore"
+                    style="@style/Widget.EduConnect.Button.Mint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/btn_find_tutor_now"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Category Section Header -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/section_categories"
+            android:textColor="@color/ink_950"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- Category Chips Row with White background buttons for high contrast -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCatMath"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="42dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="📐 Toán học &amp; STEM"
+                    android:textColor="@color/academic_math"
+                    android:textSize="11sp"
+                    app:backgroundTint="@color/white"
+                    app:cornerRadius="12dp"
+                    app:strokeColor="@color/academic_math" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCatLang"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="42dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="🌐 Tiếng Anh / IELTS"
+                    android:textColor="@color/academic_lang"
+                    android:textSize="11sp"
+                    app:backgroundTint="@color/white"
+                    app:cornerRadius="12dp"
+                    app:strokeColor="@color/academic_lang" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCatScience"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="42dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="🔬 Khoa học Tự nhiên"
+                    android:textColor="@color/academic_science"
+                    android:textSize="11sp"
+                    app:backgroundTint="@color/white"
+                    app:cornerRadius="12dp"
+                    app:strokeColor="@color/academic_science" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCatTech"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="42dp"
+                    android:text="💻 Tin học &amp; AI"
+                    android:textColor="@color/academic_tech"
+                    android:textSize="11sp"
+                    app:backgroundTint="@color/white"
+                    app:cornerRadius="12dp"
+                    app:strokeColor="@color/academic_tech" />
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <!-- Featured Spotlight Tutor -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/section_featured_tutor"
+            android:textColor="@color/ink_950"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardFeaturedTutor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="3dp"
+            app:strokeColor="@color/ivory_200"
+            app:strokeWidth="1dp"
+            app:cardBackgroundColor="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/imgFeaturedAvatar"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:scaleType="centerCrop"
+                        android:background="@drawable/bg_avatar_placeholder"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+                        tools:srcCompat="@tools:sample/avatars" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvFeaturedName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nguyễn Minh Trang"
+                            android:textColor="@color/ink_950"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvFeaturedTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Thạc sĩ Sư Phạm Toán — ĐH Sư Phạm TP.HCM"
+                            android:textColor="@color/ink_600"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tvFeaturedRating"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="⭐ 4.9 (38 đánh giá) • 250.000₫/h"
+                            android:textColor="@color/star_gold"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvFeaturedBio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/ivory_100"
+                    android:padding="10dp"
+                    android:text="&quot;Thủ khoa đầu ra Sư phạm Toán 2021. Hơn 5 năm kinh nghiệm đồng hành cùng học sinh khối 10-12 ôn thi THPT Quốc gia đạt 8.5+.&quot;"
+                    android:textColor="@color/ink_700"
+                    android:textSize="12sp"
+                    android:textStyle="italic" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFeaturedBook"
+                    style="@style/Widget.EduConnect.Button.Primary"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="12dp"
+                    android:text="Xem hồ sơ &amp; Đặt lịch học thử"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 4-Layer Trust Pillars -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/section_trust_pillars"
+            android:textColor="@color/ink_950"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="24dp"
+            android:orientation="vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/ivory_200"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="14dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_verified"
+                        app:tint="@color/mint_600" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="100% Xác thực Căn cước &amp; Bằng cấp"
+                            android:textColor="@color/ink_950"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Kiểm tra bằng cấp ĐH, bảng điểm chuyên ngành và CCCD."
+                            android:textColor="@color/ink_600"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/ivory_200"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="14dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_check_circle"
+                        app:tint="@color/mint_600" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Dạy thử 45 phút trước Hội đồng Sư phạm"
+                            android:textColor="@color/ink_950"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Đánh giá kỹ năng truyền đạt, kiên nhẫn và tác phong sư phạm."
+                            android:textColor="@color/ink_600"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

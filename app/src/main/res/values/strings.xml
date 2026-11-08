@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EduConnect</string>
+    <string name="app_tagline">Nền tảng kết nối gia sư ưu tú &amp; Học tập cá nhân hóa</string>
+    <string name="app_copyright">© 2026 EduConnect Vietnam • Capstone Project</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Trang chủ</string>
+    <string name="nav_tutors">Gia sư</string>
+    <string name="nav_schedule">Lịch học</string>
+    <string name="nav_profile">Cá nhân</string>
+
+    <!-- Login & Register -->
+    <string name="title_login">Đăng nhập EduConnect</string>
+    <string name="subtitle_login">Chào mừng bạn trở lại với không gian học tập chuẩn quốc tế</string>
+    <string name="hint_email">Địa chỉ Email</string>
+    <string name="hint_password">Mật khẩu</string>
+    <string name="hint_fullname">Họ và tên</string>
+    <string name="hint_phone">Số điện thoại</string>
+    <string name="hint_confirm_password">Xác nhận mật khẩu</string>
+    <string name="btn_login">Đăng nhập</string>
+    <string name="btn_register">Đăng ký tài khoản</string>
+    <string name="prompt_have_account">Đã có tài khoản? Đăng nhập ngay</string>
+    <string name="prompt_no_account">Chưa có tài khoản? Đăng ký tại đây</string>
+    <string name="btn_demo_parent">👨‍👩‍👧 Đăng nhập nhanh Phụ huynh mẫu</string>
+    <string name="btn_demo_tutor">👨‍🏫 Đăng nhập nhanh Gia sư mẫu</string>
+    <string name="role_parent">Phụ huynh / Học sinh</string>
+    <string name="role_tutor">Gia sư / Giảng viên</string>
+
+    <!-- Validation messages -->
+    <string name="err_empty_email">Vui lòng nhập email</string>
+    <string name="err_invalid_email">Định dạng email không hợp lệ</string>
+    <string name="err_empty_password">Vui lòng nhập mật khẩu</string>
+    <string name="err_short_password">Mật khẩu phải từ 6 ký tự trở lên</string>
+    <string name="err_password_not_match">Mật khẩu xác nhận không trùng khớp</string>
+    <string name="err_empty_name">Vui lòng nhập họ và tên</string>
+    <string name="err_empty_phone">Vui lòng nhập số điện thoại</string>
+    <string name="msg_login_success">Đăng nhập thành công!</string>
+    <string name="msg_login_failed">Sai email hoặc mật khẩu!</string>
+    <string name="msg_register_success">Đăng ký thành công! Hãy đăng nhập.</string>
+    <string name="msg_email_exists">Email này đã được sử dụng!</string>
+
+    <!-- Home Fragment -->
+    <string name="greeting_default">Xin chào, Bạn!</string>
+    <string name="hero_title">Nâng tầm tri thức, kết nối gia sư ưu tú</string>
+    <string name="hero_subtitle">Cam kết kiểm định 4 lớp nghiêm ngặt, học thử 1-1 miễn phí và theo dõi tiến độ số hóa.</string>
+    <string name="btn_find_tutor_now">Tìm gia sư ngay</string>
+    <string name="section_categories">Chuyên ngành trọng điểm</string>
+    <string name="section_featured_tutor">Gia sư tiêu biểu của tháng</string>
+    <string name="section_trust_pillars">Cam kết chất lượng 4 lớp</string>
+
+    <!-- Tutors Discovery -->
+    <string name="hint_search_tutors">Tìm theo tên, môn học, trường ĐH...</string>
+    <string name="filter_all">Tất cả</string>
+    <string name="filter_math">Toán học</string>
+    <string name="filter_lang">Tiếng Anh / IELTS</string>
+    <string name="filter_science">Khoa học</string>
+    <string name="filter_tech">Tin học &amp; AI</string>
+    <string name="btn_view_profile">Xem hồ sơ</string>
+    <string name="btn_book_trial">Đặt lịch học</string>
+    <string name="empty_tutors">Không tìm thấy gia sư phù hợp với tìm kiếm của bạn.</string>
+
+    <!-- Tutor Detail -->
+    <string name="title_tutor_detail">Hồ sơ Gia sư</string>
+    <string name="section_bio">Tiểu sử &amp; Phương pháp giảng dạy</string>
+    <string name="section_achievements">Bằng cấp &amp; Thành tích xác thực</string>
+    <string name="section_schedule">Lịch rảnh trong tuần</string>
+    <string name="section_reviews">Đánh giá từ phụ huynh</string>
+    <string name="btn_book_now">Đặt lịch học thử 1-1 miễn phí</string>
+
+    <!-- Booking Dialog -->
+    <string name="title_booking_dialog">Đăng ký học thử cùng gia sư</string>
+    <string name="hint_student_name">Tên học sinh</string>
+    <string name="hint_student_grade">Khối lớp (VD: Lớp 12, Lớp 10...)</string>
+    <string name="hint_booking_date">Chọn ngày học</string>
+    <string name="hint_booking_timeslot">Khung giờ học</string>
+    <string name="hint_booking_note">Ghi chú học lực / Mục tiêu</string>
+    <string name="btn_confirm_booking">Xác nhận lịch hẹn</string>
+    <string name="btn_cancel">Hủy</string>
+    <string name="msg_booking_success">Đặt lịch thành công! Mã buổi học: </string>
+
+    <!-- Schedule Fragment -->
+    <string name="title_schedule">Lịch học &amp; Tiến độ</string>
+    <string name="subtitle_schedule">Quản lý các buổi học đã đăng ký và theo dõi học tập</string>
+    <string name="stat_booked_sessions">Buổi đã đặt</string>
+    <string name="stat_study_hours">Giờ học tích lũy</string>
+    <string name="empty_schedule">Bạn chưa có lịch học nào sắp tới.</string>
+    <string name="btn_cancel_booking">Hủy buổi học</string>
+    <string name="confirm_cancel_booking">Bạn có chắc chắn muốn hủy buổi học này không?</string>
+    <string name="msg_cancel_success">Đã hủy buổi học thành công!</string>
+
+    <!-- Profile Fragment -->
+    <string name="title_profile">Hồ sơ cá nhân</string>
+    <string name="stat_saved_tutors">Gia sư đã lưu</string>
+    <string name="stat_total_bookings">Lịch hẹn đã đặt</string>
+    <string name="btn_edit_profile">Chỉnh sửa thông tin</string>
+    <string name="btn_logout">Đăng xuất</string>
+    <string name="confirm_logout">Bạn có muốn đăng xuất khỏi ứng dụng không?</string>
+</resources>
